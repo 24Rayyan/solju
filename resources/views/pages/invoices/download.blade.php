@@ -127,5 +127,6 @@
         <p class="grand-total">Grand Total: Rp {{ number_format($order->products->sum(fn($p) => $p->quantity * $product->price), 2, ',', '.') }}</p>
     </div>
     <p style="margin-top: 15%"><i>*Dokumen ini valid dan telah diproses oleh sistem elektronik</i></p>
+
 </body>
 </html>

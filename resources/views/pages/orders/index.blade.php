@@ -6,8 +6,6 @@
         <a href="{{ route('orders.create') }}" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:from-blue-600 hover:to-blue-700 shadow-lg">
             Tambah Order
         </a>
-        
-        <!-- Search Bar -->
         <form method="GET" action="{{ route('orders.index') }}" class="mt-4" >
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari Nama Pelanggan" class="px-4 py-2 border rounded-lg w-full md:w-1/3 focus:ring focus:ring-blue-300">
             <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg ml-2 hover:bg-blue-600">Cari</button>
@@ -35,24 +33,38 @@
                                     <i class="fas fa-eye"></i> <!-- Ikon Detail -->
                                 </a>
                             
-                                <!-- Tombol Edit -->
-                                <a href="{{ route('orders.edit', $order) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded-lg transition-colors">
-                                    <i class="fas fa-edit"></i> <!-- Ikon Edit -->
-                                </a>
+                                <!-- Tombol Edit (Hanya muncul jika order tidak dikunci) -->
+                                @if (!$order->locked)
+                                    <a href="{{ route('orders.edit', $order) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded-lg transition-colors">
+                                        <i class="fas fa-edit"></i> <!-- Ikon Edit -->
+                                    </a>
+                                @endif
                             
-                                <!-- Tombol Hapus -->
-                                <form action="{{ route('orders.destroy', $order) }}" method="POST" class="inline-block">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-lg transition-colors">
-                                        <i class="fas fa-trash"></i> <!-- Ikon Hapus -->
-                                    </button>
-                                </form>
+                                <!-- Tombol Hapus (Hanya muncul jika order tidak dikunci) -->
+                                @if (!$order->locked)
+                                    <form action="{{ route('orders.destroy', $order) }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-lg transition-colors">
+                                            <i class="fas fa-trash"></i> <!-- Ikon Hapus -->
+                                        </button>
+                                    </form>
+                                @endif
                             
                                 <!-- Tombol Download -->
                                 <a href="{{ route('orders.downloadInvoice', $order) }}" class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-lg transition-colors">
                                     <i class="fas fa-download"></i> <!-- Ikon Download -->
                                 </a>
+                            
+                                <!-- Tombol Kunci Order (Hanya muncul jika order belum dikunci) -->
+                                @if (!$order->locked)
+                                <form action="{{ route('orders.lock', $order) }}" method="POST" class="inline-block">
+                                    @csrf
+                                    <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white py-1 px-3 rounded-lg transition-colors">
+                                        <i class="fas fa-lock"></i> <!-- Ikon Kunci -->
+                                    </button>
+                                </form>
+                            @endif
                             </td>
                         </tr>
                     @endforeach

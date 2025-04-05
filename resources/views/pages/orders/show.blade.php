@@ -45,7 +45,7 @@
                 <div class="mt-6 text-right">
                     <p class="text-lg font-semibold text-gray-800">
                         <strong>Total Keseluruhan:</strong> 
-                        Rp {{ number_format($order->products->sum(fn($p) => $p->quantity * $p->price), 2, ',', '.') }}
+                        Rp {{ number_format($order->products->sum(fn($p) => $p->quantity * $p->price), 0, ',', '.') }}
                     </p>
                 </div>
             </div>

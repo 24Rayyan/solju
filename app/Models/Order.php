@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['invoice_number', 'customer_name', 'customer_address'];
+    protected $fillable = ['invoice_number', 'customer_name', 'customer_address', 'locked'];
 
     // Generate nomor invoice otomatis sebelum menyimpan
     protected static function boot()
@@ -27,5 +27,12 @@ class Order extends Model
     public function orderProducts()
     {
         return $this->hasMany(OrderProduct::class);
+    }
+
+    public function getTotalAttribute()
+    {
+        return $this->products->sum(function ($product) {
+            return $product->quantity * $product->price;
+        });
     }
 }

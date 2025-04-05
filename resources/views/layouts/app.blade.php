@@ -26,5 +26,30 @@
     <div class="container mx-auto mt-8 p-8 container-main">
         @yield('content')
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const currencyInputs = document.querySelectorAll('.currency-input');
+    
+            currencyInputs.forEach(input => {
+                // Format nilai saat input kehilangan fokus
+                input.addEventListener('blur', function () {
+                    let value = this.value.replace(/[^0-9]/g, ''); // Hapus semua karakter non-angka
+                    value = parseInt(value); // Konversi ke bilangan bulat
+                    this.value = new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR',
+                        minimumFractionDigits: 0, // Tidak ada desimal
+                        maximumFractionDigits: 0  // Tidak ada desimal
+                    }).format(value).replace('Rp', '').trim(); // Format sebagai mata uang
+                });
+    
+                // Hapus format saat input mendapatkan fokus
+                input.addEventListener('focus', function () {
+                    let value = this.value.replace(/[^0-9]/g, ''); // Hapus semua karakter non-angka
+                    this.value = value; // Tampilkan nilai tanpa format
+                });
+            });
+        });
+    </script>
 </body>
 </html>

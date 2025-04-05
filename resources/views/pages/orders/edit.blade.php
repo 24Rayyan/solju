@@ -48,7 +48,8 @@
                                             <input type="number" name="products[{{ $index }}][quantity]" class="w-full px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ $product->quantity }}" required>
                                         </td>
                                         <td class="px-4 py-3">
-                                            <input type="number" name="products[{{ $index }}][price]" class="w-full px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ $product->price }}" step="0.01" required>
+                                            <input type="number" name="products[{{ $index }}][price]" class="w-full px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{ $product->price }}" step="0.01" value="Rp {{ number_format($product->price, 0, ',', '.') }}" 
+                                            required required>
                                         </td>
                                     </tr>
                                 @endforeach
